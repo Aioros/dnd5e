@@ -80,7 +80,7 @@ export default class ActiveEffect5e extends ActiveEffect {
     if ( this.type === "enchantment" ) return false;
     if ( this.parent instanceof dnd5e.documents.Item5e ) {
       if ( this.parent.areEffectsSuppressed ) return true;
-      if ( fromUuidSync(this.flags.dnd5e?.enchantment?.origin, { strict: false })?.disabled ) return true;
+      if ( this.riderOrigin?.disabled ) return true;
     }
     return false;
   }
@@ -90,6 +90,17 @@ export default class ActiveEffect5e extends ActiveEffect {
   /** @inheritDoc */
   get isTemporary() {
     return super.isTemporary && !this.isConcealed;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Another effect that granted this effect as a rider.
+   * @type {ActiveEffect5e|null}
+   */
+  get riderOrigin() {
+    if (!(this.parent instanceof Item)) return null;
+    return this.parent.effects.get(this.flags.dnd5e?.riderOrigin) ?? null;
   }
 
   /* -------------------------------------------- */
@@ -433,7 +444,7 @@ export default class ActiveEffect5e extends ActiveEffect {
       if ( !activityData ) continue;
       activityData._id = foundry.utils.randomID();
       riderActivities[activityData._id] = activityData;
-      foundry.utils.setProperty(activityData, "flags.dnd5e.enchantment.origin", this.uuid);
+      foundry.utils.setProperty(activityData, "flags.dnd5e.riderOrigin", this.id);
     }
     let createdActivities = [];
     if ( !foundry.utils.isEmpty(riderActivities) ) {
@@ -452,7 +463,7 @@ export default class ActiveEffect5e extends ActiveEffect {
         delete effectData.flags?.dnd5e?.rider;
         effectData.origin = this.origin;
       }
-      foundry.utils.setProperty(effectData, "flags.dnd5e.enchantment.origin", this.uuid);
+      foundry.utils.setProperty(effectData, "flags.dnd5e.riderOrigin", this.id);
       return effectData;
     }));
     riderEffects = riderEffects.filter(_ => _);
@@ -463,7 +474,10 @@ export default class ActiveEffect5e extends ActiveEffect {
     if ( this.parent.isEmbedded ) {
       const riderItems = await Item5e.createWithContents(
         (await Promise.all(profile.riders.item.map(uuid => fromUuid(uuid)))).filter(_ => _), {
-          transformAll: item => item.clone({ "flags.dnd5e.enchantment.origin": this.uuid }, { keepId: true })
+          transformAll: item => item.clone({
+            "flags.dnd5e.enchantment.origin": this.uuid,
+            "flags.dnd5e.riderOrigin": this.uuid
+          }, { keepId: true })
         }
       );
       createdItems = await this.parent.actor.createEmbeddedDocuments("Item", riderItems, { keepId: true });
