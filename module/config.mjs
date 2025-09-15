@@ -1170,6 +1170,8 @@ preLocalize("abilityConsumptionTypes", { sort: true });
  * @property {string} label                                     Localized label for the target type.
  * @property {ConsumptionConsumeFunction} consume               Function used to consume according to this type.
  * @property {ConsumptionLabelsFunction} consumptionLabels      Function used to generate a hint of consumption amount.
+ * @property {string} [nonEmbeddedHint]                         Hint displayed in the target field when this type is
+ *                                                              configured on an non-embedded item.
  * @property {{value: string, label: string}[]} [scalingModes]  Additional scaling modes for this consumption type in
  *                                                              addition to the default "amount" scaling.
  * @property {boolean} [targetRequiresEmbedded]                 Use text input rather than select when not embedded.
@@ -1221,6 +1223,7 @@ DND5E.activityConsumptionTypes = {
     label: "DND5E.CONSUMPTION.Type.ItemUses.Label",
     consume: ConsumptionTargetData.consumeItemUses,
     consumptionLabels: ConsumptionTargetData.consumptionLabelsItemUses,
+    nonEmbeddedHint: "DND5E.CONSUMPTION.Type.ItemUses.NonEmbeddedHint",
     targetRequiresEmbedded: true,
     validTargets: ConsumptionTargetData.validItemUsesTargets
   },
@@ -1228,6 +1231,7 @@ DND5E.activityConsumptionTypes = {
     label: "DND5E.CONSUMPTION.Type.Material.Label",
     consume: ConsumptionTargetData.consumeMaterial,
     consumptionLabels: ConsumptionTargetData.consumptionLabelsMaterial,
+    nonEmbeddedHint: "DND5E.CONSUMPTION.Type.Material.NonEmbeddedHint",
     targetRequiresEmbedded: true,
     validTargets: ConsumptionTargetData.validMaterialTargets
   },
@@ -1248,6 +1252,7 @@ DND5E.activityConsumptionTypes = {
     label: "DND5E.CONSUMPTION.Type.Attribute.Label",
     consume: ConsumptionTargetData.consumeAttribute,
     consumptionLabels: ConsumptionTargetData.consumptionLabelsAttribute,
+    nonEmbeddedHint: "DND5E.CONSUMPTION.Type.Attribute.NonEmbeddedHint",
     targetRequiresEmbedded: true,
     validTargets: ConsumptionTargetData.validAttributeTargets
   }
