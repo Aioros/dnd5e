@@ -803,9 +803,14 @@
 "DND5E.AC": "AC",
 
 "DND5E.ATTACK": {
-  "Title": {
-    "one": "Attack",
-    "other": "Attacks"
+  "Attack": {
+    "mwak": "Melee Attack",
+    "rwak": "Ranged Attack"
+  },
+  "Classification": {
+    "Spell": "Spell",
+    "Unarmed": "Unarmed",
+    "Weapon": "Weapon"
   },
   "FIELDS": {
     "attack": {
@@ -858,19 +863,11 @@
       }
     }
   },
-  "Attack": {
-    "mwak": "Melee Attack",
-    "rwak": "Ranged Attack"
-  },
-  "Classification": {
-    "Spell": "Spell",
-    "Unarmed": "Unarmed",
-    "Weapon": "Weapon"
-  },
   "Formatted": {
     "2014": "{type} {classification} Attack",
     "2024": "{type} Attack Roll"
   },
+  "Hint": "Make an attack roll and roll damage.",
   "Mode": {
     "Label": "Attack Mode",
     "Offhand": "Offhand",
@@ -879,6 +876,10 @@
     "Thrown": "Thrown",
     "ThrownOffhand": "Offhand Throw",
     "TwoHanded": "Two-Handed"
+  },
+  "Title": {
+    "one": "Attack",
+    "other": "Attacks"
   },
   "Type": {
     "Melee": "Melee",
@@ -1050,7 +1051,12 @@
 },
 
 "DND5E.CAST": {
-  "Title": "Cast",
+  "Action": {
+    "RemoveSpell": "Remove Spell"
+  },
+  "Enchantment": {
+    "Name": "Spell Changes"
+  },
   "FIELDS": {
     "spell": {
       "label": "Casting Details",
@@ -1089,16 +1095,12 @@
       }
     }
   },
+  "Hint": "Cast a spell through an item.",
   "SECTIONS": {
     "Spell": "Spell",
     "Spellbook": "Additional Spells"
   },
-  "Action": {
-    "RemoveSpell": "Remove Spell"
-  },
-  "Enchantment": {
-    "Name": "Spell Changes"
-  }
+  "Title": "Cast"
 },
 
 "DND5E.Casting": "Casting",
@@ -1178,7 +1180,6 @@
 },
 
 "DND5E.CHECK": {
-  "Title": "Check",
   "FIELDS": {
     "check": {
       "label": "Check Details",
@@ -1203,7 +1204,9 @@
       }
     }
   },
-  "ThisTool": "This Tool"
+  "Hint": "Perform an ability check possibly assisted by a skill or tool.",
+  "ThisTool": "This Tool",
+  "Title": "Check"
 },
 
 "DND5E.CheckBonus": "Check Bonus",
@@ -1710,7 +1713,6 @@
 "DND5E.Current": "Current",
 
 "DND5E.DAMAGE": {
-  "Title": "Damage",
   "FIELDS": {
     "damage": {
       "label": "Damage",
@@ -1777,6 +1779,7 @@
       }
     }
   },
+  "Hint": "Damage a creature without any attack or save.",
   "Part": {
     "Action": {
       "Create": "Create Damage Part",
@@ -1789,7 +1792,8 @@
     "None": "No Scaling",
     "Whole": "Every Level",
     "WholeCantrip": "Cantrip Scaling"
-  }
+  },
+  "Title": "Damage"
 },
 
 "DND5E.DamImm": "Damage Immunities",
@@ -1941,7 +1945,6 @@
 "DND5E.EffectsSearch": "Search effects",
 
 "DND5E.ENCHANT": {
-  "Title": "Enchant",
   "FIELDS": {
     "effects.element": {
       "level": {
@@ -2003,11 +2006,6 @@
       }
     }
   },
-  "SECTIONS": {
-    "Enchanting": "Enchanting",
-    "Enchantments": "Enchantments",
-    "Restrictions": "Restrictions"
-  },
   "DropArea": "Place item here to enchant it…",
   "Enchanted": "{current} &sol; {max} enchanted",
   "Enchantment": {
@@ -2018,6 +2016,13 @@
     "Active": "{name} (active)",
     "Empty": "No associated enchantments. Use the <i class=\"fas fa-plus\"></i> button above to create one, or select an existing enchantment from the drop-down."
   },
+  "Hint": "Apply an enchantment to an item that modifies its stats or functionality.",
+  "SECTIONS": {
+    "Enchanting": "Enchanting",
+    "Enchantments": "Enchantments",
+    "Restrictions": "Restrictions"
+  },
+  "Title": "Enchant",
   "Warning": {
     "ConcentrationEnded": "Cannot apply this enchantment because concentration has ended.",
     "MissingProperty": "Item must have one of these properties to be enchanted: {validProperties}.",
@@ -2483,12 +2488,13 @@
 "DND5E.FormulaCannotContainDiceError": "{name} formula cannot contain dice expressions.",
 
 "DND5E.FORWARD": {
-  "Title": "Forward",
   "FIELDS": {
     "activity": {
       "label": "Triggered Activity"
     }
   },
+  "Hint": "Trigger another activity on this item with different consumption & scaling details.",
+  "Title": "Forward",
   "Warning": {
     "NoActivity": "Linked activity must be configured before Forward activity can be used."
   }
@@ -2660,7 +2666,6 @@
 "DND5E.HalfProficient": "Half Proficient",
 
 "DND5E.HEAL": {
-  "Title": "Heal",
   "FIELDS": {
     "healing": {
       "label": "Healing",
@@ -2707,7 +2712,9 @@
         "hint": "Type of healing inflicted or multiple for the user to select from."
       }
     }
-  }
+  },
+  "Hint": "Heal a creature",
+  "Title": "Heal"
 },
 
 "DND5E.Healing": "Healing",
@@ -3453,10 +3460,6 @@
 "DND5E.MovementAir": "Air",
 
 "DND5E.SAVE": {
-  "Title": {
-    "one": "Save",
-    "other": "Saves"
-  },
   "FIELDS": {
     "damage": {
       "label": "Save Damage",
@@ -3499,7 +3502,12 @@
       }
     }
   },
-  "OnSave": "On Save"
+  "Hint": "Impose a saving throw roll with the option of rolling damage.",
+  "OnSave": "On Save",
+  "Title": {
+    "one": "Save",
+    "other": "Saves"
+  }
 },
 
 "DND5E.SaveBonus": "Saving Throw Bonus",
@@ -3869,7 +3877,6 @@
 "DND5E.Summary": "Summary",
 
 "DND5E.SUMMON": {
-  "Title": "Summon",
   "FIELDS": {
     "bonuses": {
       "ac": {
@@ -3975,11 +3982,6 @@
       }
     }
   },
-  "SECTIONS": {
-    "Changes": "Changes",
-    "Profiles": "Profiles",
-    "Summoning": "Summoning"
-  },
   "Action": {
     "Place": "Place Summons",
     "Summon": "Summon",
@@ -3989,6 +3991,7 @@
     "Label": "Creature Changes",
     "Hint": "Changes that will be made to the creature being summoned. Any @ references used in the following formulas will be based on the summoner's stats. Summoned creatures' stats can be referenced using @summon (e.g. @summon.attributes.hd.max to reference the creature's hit dice count)."
   },
+  "Hint": "Summon a new creature to the scene.",
   "ItemChanges": {
     "Label": "Item Changes",
     "Hint": "Changes made to items on the summoned creature."
@@ -4004,6 +4007,12 @@
     "Empty": "Click the <i class=\"fas fa-plus\"></i> button above to create a profile.",
     "EmptyDrop": "Click the <i class=\"fas fa-plus\"></i> button above to create a profile or drop a creature to summon here."
   },
+  "SECTIONS": {
+    "Changes": "Changes",
+    "Profiles": "Profiles",
+    "Summoning": "Summoning"
+  },
+  "Title": "Summon",
   "Warning": {
     "NoOwnership": "You must have ownership of '{actor}' in order to summon it.",
     "NoProfile": "Cannot find summoning profile {profileId} on '{item}'.",
@@ -4436,6 +4445,7 @@
       }
     }
   },
+  "Hint": "Change an actor using the stats of another.",
   "Preset": {
     "Appearance": {
       "Label": "Appearance Only"
@@ -4880,7 +4890,6 @@
 },
 
 "DND5E.UTILITY": {
-  "Title": "Use",
   "FIELDS": {
     "roll": {
       "label": "Roll",
@@ -4901,7 +4910,9 @@
         "hint": "Display the rolling button in chat for all players."
       }
     }
-  }
+  },
+  "Hint": "Make an arbitrary roll or indicate some other action was performed not represented by other activity types.",
+  "Title": "Use"
 },
 
 "DND5E.Value": "Value",

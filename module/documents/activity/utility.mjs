@@ -21,6 +21,7 @@ export default class UtilityActivity extends ActivityMixin(UtilityActivityData) 
       type: "utility",
       img: "systems/dnd5e/icons/svg/activity/utility.svg",
       title: "DND5E.UTILITY.Title",
+      hint: "DND5E.UTILITY.Hint",
       sheetClass: UtilitySheet,
       usage: {
         actions: {

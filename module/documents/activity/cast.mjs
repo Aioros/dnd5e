@@ -29,6 +29,7 @@ export default class CastActivity extends ActivityMixin(CastActivityData) {
       type: "cast",
       img: "systems/dnd5e/icons/svg/activity/cast.svg",
       title: "DND5E.CAST.Title",
+      hint: "DND5E.CAST.Hint",
       sheetClass: CastSheet
     }, { inplace: false })
   );

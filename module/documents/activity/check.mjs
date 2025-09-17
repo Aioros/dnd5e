@@ -23,6 +23,7 @@ export default class CheckActivity extends ActivityMixin(CheckActivityData) {
       type: "check",
       img: "systems/dnd5e/icons/svg/activity/check.svg",
       title: "DND5E.CHECK.Title",
+      hint: "DND5E.CHECK.Hint",
       sheetClass: CheckSheet,
       usage: {
         actions: {
