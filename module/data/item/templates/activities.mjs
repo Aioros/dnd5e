@@ -318,7 +318,7 @@ export default class ActivitiesTemplate extends SystemDataModel {
    * Perform any item & activity uses recovery.
    * @param {string[]} periods  Recovery periods to check.
    * @param {object} rollData   Roll data to use when evaluating recover formulas.
-   * @returns {Promise<{ updates: object, rolls: BasicRoll[] }>}
+   * @returns {Promise<{ updates: object, rolls: BasicRoll[], destroy: boolean }>}
    */
   async recoverUses(periods, rollData) {
     const updates = {};
@@ -344,6 +344,9 @@ export default class ActivitiesTemplate extends SystemDataModel {
     }
     if ( shouldRecharge ) await recharge(this.parent);
 
+    const destroy = this.uses.autoDestroy && this.uses.recovery.some(r => r.type === "loseAll")
+      && (updates.system?.uses?.spent >= this.uses.max);
+
     for ( const activity of this.activities ) {
       const result = await UsesField.recoverUses.call(activity, periods, rollData);
       if ( result ) {
@@ -353,7 +356,7 @@ export default class ActivitiesTemplate extends SystemDataModel {
       if ( shouldRecharge ) await recharge(activity);
     }
 
-    return { updates, rolls };
+    return { updates, rolls, destroy };
   }
 
   /* -------------------------------------------- */

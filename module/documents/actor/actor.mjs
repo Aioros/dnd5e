@@ -2115,6 +2115,7 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
    * @typedef RestResult
    * @property {string} type              Type of rest performed.
    * @property {Actor5e} clone            Clone of the actor before rest is performed.
+   * @property {string[]} deleteItems     IDs of items to be deleted from the actor.
    * @property {object} deltas
    * @property {number} deltas.hitPoints  Hit points recovered during the rest.
    * @property {number} deltas.hitDice    Hit dice recovered or spent during the rest.
@@ -2272,6 +2273,7 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
 
     result = foundry.utils.mergeObject({
       type: config.type,
+      deleteItems: [],
       deltas: {
         hitPoints: 0,
         hitDice: 0
@@ -2316,6 +2318,7 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
 
     // Perform updates
     await this.update(result.updateData, { isRest: true });
+    await this.deleteEmbeddedDocuments("Item", result.deleteItems, { isRest: true });
     await this.updateEmbeddedDocuments("Item", result.updateItems, { isRest: true });
 
     // Advance the game clock
@@ -2381,7 +2384,9 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       speaker: ChatMessage.getSpeaker({ actor: this, alias: this.name }),
       system: {
         activations: ActivationsField.getActivations(this, typeConfig?.activationPeriods ?? []),
-        deltas: ActorDeltasField.getDeltas(result.clone, { actor: result.updateData, item: result.updateItems }),
+        deltas: ActorDeltasField.getDeltas(result.clone, {
+          actor: result.updateData, delete: result.deleteItems, item: result.updateItems
+        }),
         request: config.request,
         type: result.type
       }
@@ -2559,8 +2564,10 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     for ( const item of this.items ) {
       if ( foundry.utils.getType(item.system.recoverUses) !== "function" ) continue;
       const rollData = item.getRollData();
-      const { updates, rolls } = await item.system.recoverUses(recovery, rollData);
-      if ( !foundry.utils.isEmpty(updates) ) {
+      const { updates, rolls, destroy } = await item.system.recoverUses(recovery, rollData);
+      if ( destroy ) {
+        result.deleteItems.push(item.id);
+      } else if ( !foundry.utils.isEmpty(updates) ) {
         const updateTarget = result.updateItems.find(i => i._id === item.id);
         if ( updateTarget ) foundry.utils.mergeObject(updateTarget, updates);
         else result.updateItems.push({ _id: item.id, ...updates });

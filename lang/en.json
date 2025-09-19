@@ -1163,6 +1163,8 @@
 "DND5E.CHATMESSAGE": {
   "Activities": "Activities",
   "Deltas": {
+    "Created": "Item Created",
+    "Deleted": "Item Deleted",
     "Recovery": "Recovery"
   },
   "REQUEST": {
