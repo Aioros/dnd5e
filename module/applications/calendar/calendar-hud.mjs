@@ -98,6 +98,7 @@ export default class CalendarHUD extends BaseCalendarHUD {
       },
       {
         action: "advance",
+        dataset: { value: 1, unit: "hour" },
         icon: "fa-solid fa-angles-right",
         position: "end",
         tooltip: game.i18n.format("DND5E.CALENDAR.Action.AdvanceTime", { amount: formatTime(1, "hour").titleCase() }),
