@@ -17,8 +17,11 @@ const {
 /**
  * Data for effects that can be applied.
  *
- * @typedef {object} EffectApplicationData
- * @property {string} _id  ID of the effect to apply.
+ * @typedef EffectApplicationData
+ * @property {string} _id        ID of the effect to apply.
+ * @property {object} level
+ * @property {number} level.min  Minimum level at which this effect can be applied.
+ * @property {number} level.max  Maximum level at which this effect can be applied.
  */
 
 /**
@@ -162,7 +165,10 @@ export default class BaseActivityData extends foundry.abstract.DataModel {
    * @type {ActiveEffect5e[]|null}
    */
   get applicableEffects() {
-    return this.effects?.map(e => e.effect).filter(e => e) ?? null;
+    const level = this.relevantLevel;
+    return this.effects?.filter(e =>
+      e.effect && ((e.level?.min ?? -Infinity) <= level) && (level <= (e.level?.max ?? Infinity))
+    ).map(e => e.effect) ?? null;
   }
 
   /* -------------------------------------------- */

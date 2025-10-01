@@ -8,9 +8,6 @@ const {
 
 /**
  * @typedef {EffectApplicationData} EnchantEffectApplicationData
- * @property {object} level
- * @property {number} level.min             Minimum level at which this profile can be used.
- * @property {number} level.max             Maximum level at which this profile can be used.
  * @property {object} riders
  * @property {Set<string>} riders.activity  IDs of other activities on this item that will be added when enchanting.
  * @property {Set<string>} riders.effect    IDs of other effects on this item that will be added when enchanting.
@@ -35,10 +32,6 @@ export default class EnchantActivityData extends BaseActivityData {
     return {
       ...super.defineSchema(),
       effects: new ArrayField(new AppliedEffectField({
-        level: new SchemaField({
-          min: new NumberField({ min: 0, integer: true }),
-          max: new NumberField({ min: 0, integer: true })
-        }),
         riders: new SchemaField({
           activity: new SetField(new DocumentIdField()),
           effect: new SetField(new DocumentIdField()),
@@ -91,9 +84,7 @@ export default class EnchantActivityData extends BaseActivityData {
    * @type {EnchantEffectApplicationData[]}
    */
   get availableEnchantments() {
-    const keyPath = (this.item.type === "spell") && (this.item.system.level > 0) ? "item.level"
-      : this.enchant.identifier ? `classes.${this.enchant.identifier}.levels` : "details.level";
-    const level = foundry.utils.getProperty(this.getRollData(), keyPath) ?? 0;
+    const level = this.relevantLevel;
     return this.effects
       .filter(e => e.effect && ((e.level.min ?? -Infinity) <= level) && (level <= (e.level.max ?? Infinity)));
   }

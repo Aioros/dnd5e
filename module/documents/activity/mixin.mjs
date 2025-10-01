@@ -252,10 +252,7 @@ export default function ActivityMixin(Base) {
           flags: {
             dnd5e: {
               ...this.messageFlags,
-              messageType: "usage",
-              use: {
-                effects: this.applicableEffects?.map(e => e.id)
-              }
+              messageType: "usage"
             }
           }
         },
@@ -809,6 +806,8 @@ export default function ActivityMixin(Base) {
      */
     _finalizeMessageConfig(usageConfig, messageConfig, results) {
       messageConfig.data.rolls = (messageConfig.data.rolls ?? []).concat(results.updates.rolls);
+      const effects = this.applicableEffects?.map(e => e.id);
+      if ( effects ) foundry.utils.setProperty(messageConfig.data, "flags.dnd5e.use.effects", effects);
     }
 
     /* -------------------------------------------- */
