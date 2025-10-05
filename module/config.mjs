@@ -2598,6 +2598,9 @@ preLocalize("difficultTerrainTypes", { key: "label", sort: true });
  * @enum {MovementTypeConfig}
  */
 DND5E.movementTypes = {
+  walk: {
+    label: "DND5E.MOVEMENT.Type.Walk"
+  },
   burrow: {
     label: "DND5E.MOVEMENT.Type.Burrow"
   },
@@ -2613,12 +2616,9 @@ DND5E.movementTypes = {
     label: "DND5E.MOVEMENT.Type.Swim",
     travel: "water",
     walkFallback: true
-  },
-  walk: {
-    label: "DND5E.MOVEMENT.Type.Walk"
   }
 };
-preLocalize("movementTypes", { key: "label", sort: true });
+preLocalize("movementTypes", { key: "label" });
 patchConfig("movementTypes", "label", { since: "DnD5e 5.1", until: "DnD5e 5.3" });
 
 /* -------------------------------------------- */
