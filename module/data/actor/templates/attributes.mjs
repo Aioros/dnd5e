@@ -417,8 +417,9 @@ export default class AttributesFields {
   /**
    * Modify movement speeds taking exhaustion and any other conditions into account.
    * @this {CharacterData|NPCData}
+   * @param {object} rollData  The Actor's roll data.
    */
-  static prepareMovement() {
+  static prepareMovement(rollData=this.parent.getRollData()) {
     const statuses = this.parent.statuses;
     const noMovement = this.parent.hasConditionEffect("noMovement");
     const halfMovement = this.parent.hasConditionEffect("halfMovement");
@@ -430,6 +431,7 @@ export default class AttributesFields {
     let reduction = game.settings.get("dnd5e", "rulesVersion") === "modern"
       ? (this.attributes.exhaustion ?? 0) * (CONFIG.DND5E.conditionTypes.exhaustion?.reduction?.speed ?? 0) : 0;
     reduction = convertLength(reduction, CONFIG.DND5E.defaultUnits.length.imperial, units);
+    const bonus = simplifyBonus(this.attributes.movement.bonus, rollData);
     const field = this.schema.getField("attributes.movement");
     this.attributes.movement.max = 0;
     for ( const [type, v] of Object.entries(this.attributes.movement) ) {
@@ -447,6 +449,7 @@ export default class AttributesFields {
           speed = Math.min(speed, CONFIG.DND5E.encumbrance.speedReduction.exceedingCarryingCapacity[units] ?? 0);
         }
       }
+      if ( speed ) speed = Math.max(0, speed + bonus);
       this.attributes.movement[type] = speed;
       this.attributes.movement.max = Math.max(speed, this.attributes.movement.max);
     }
