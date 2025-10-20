@@ -33,6 +33,7 @@ const {
  * @property {string} bonuses.healing       Formula for bonus added to healing.
  * @property {Set<string>} creatureSizes    Set of creature sizes that will be set on summoned creature.
  * @property {Set<string>} creatureTypes    Set of creature types that will be set on summoned creature.
+ * @property {number|null} disposition      Control the disposition of the summoned token.
  * @property {object} match
  * @property {string} match.ability         Ability to use for calculating match values.
  * @property {boolean} match.attacks        Match the to hit values on summoned actor's attack to the summoner.
@@ -59,6 +60,7 @@ export default class SummonActivityData extends BaseActivityData {
       }),
       creatureSizes: new SetField(new StringField()),
       creatureTypes: new SetField(new StringField()),
+      disposition: new NumberField({ nullable: true, choices: Object.values(CONST.TOKEN_DISPOSITIONS) }),
       match: new SchemaField({
         ability: new StringField(),
         attacks: new BooleanField(),
